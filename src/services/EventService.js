@@ -1,4 +1,5 @@
 import EventRepository from '../repositories/EventRepository.js';
+import TicketRepository from '../repositories/TicketRepository.js';
 import EventDTO from '../dtos/EventDTO.js';
 
 class EventService {
@@ -26,7 +27,7 @@ class EventService {
 
         if (eventData.capacidadeTotal !== undefined) {
             const ingressosVendidos = currentEvent.capacidadeTotal - currentEvent.ingressosDisponiveis;
-            if (eventData.capacidadeTotal < ingressoosVendidos) {
+            if (eventData.capacidadeTotal < ingressosVendidos) {
                 throw new Error(`Não é possível reduzir a capacidade para ${eventData.capacidadeTotal}. Já existem ${ingressosVendidos} ingressos vendidos.`);
             }
 

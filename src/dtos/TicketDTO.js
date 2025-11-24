@@ -7,6 +7,7 @@ export default class TicketDTO {
 
     static ticketResponse(ticket) {
         return {
+            id: ticket._id,
             codigo: ticket.codigoReserva,
             status: ticket.status,
             dataCompra: ticket.dataCompra,
