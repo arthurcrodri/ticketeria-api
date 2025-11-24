@@ -31,12 +31,11 @@ const userSchema = new mongoose.Schema({
 });
 
 // Hook de Hash da senha antes de salvar
-userSchema.pre('save', async function(next) {
-    if (!this.isModified('senha')) return next();
+userSchema.pre('save', async function() {
+    if (!this.isModified('senha')) return;
 
     const salt = await bcrypt.genSalt(10);
     this.senha = await bcrypt.hash(this.senha, salt);
-    next();
 });
 
 // Método auxiliar de comparação de senhas
