@@ -28,7 +28,7 @@ class EventRepository {
     }
 
     // Atualizar o estoque de ingressos
-    async decrementarEstooque(id, quantidade = 1) {
+    async decrementarEstoque(id, quantidade = 1) {
         return await Event.findByIdAndUpdate(
             id,
             { $inc: { ingressosDisponiveis: -quantidade } },
