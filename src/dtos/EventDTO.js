@@ -31,7 +31,7 @@ export default class EventDTO {
             local: event.local,
             preco: event.preco,
             lugaresDisponiveis: event.ingressosDisponiveis,
-            organizador: event.criadoPor && event.criadoPor.nome ? evento.criadoPor.nome : 'Administrador'
+            organizador: event.criadoPor && event.criadoPor.nome ? event.criadoPor.nome : 'Administrador'
         };
     }
 }
