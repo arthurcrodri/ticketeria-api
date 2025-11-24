@@ -1,9 +1,9 @@
 import { validationResult } from 'express-validator';
 
 export const validateRequest = (req, res, next) => {
-    const error = validationResult(req);
+    const errors = validationResult(req);
 
-    if (!erros.isEmpty()) {
+    if (!errors.isEmpty()) {
         return res.status(400).json({
             sucesso: false,
             errors: errors.array().map(err => ({
