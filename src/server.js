@@ -9,6 +9,8 @@ import userRoutes from './routes/userRoutes.js';
 import eventRoutes from './routes/eventRoutes.js';
 import ticketRoutes from './routes.ticketRoutes.js';
 
+import errorHandler from './middlewares/errorMiddleware.js'
+
 // Configuração das variáveis de ambiente
 dotenv.config();
 
@@ -39,6 +41,16 @@ app.use('/api/tickets', ticketRoutes);
 app.get('/', (req, res) => {
     res.send('API Ticketeria funcionando! Acesse /api/eventos apra ver a lista.');
 });
+
+// Rota 404
+app.use((req, res, next) => {
+    const error = new Error(`Não encontrado - ${req.originalUrl}`);
+    res.status(404);
+    next(error);
+});
+
+// Middleware de Erro Global
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
