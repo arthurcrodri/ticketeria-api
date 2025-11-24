@@ -1,7 +1,7 @@
 import UserService from '../services/UserService.js';
 
 class UserController {
-    async getAll(req, res) {
+    async getAll(req, res, next) {
         try {
             const users = await UserService.findAll();
             res.json(users);
@@ -10,7 +10,7 @@ class UserController {
         }
     }
 
-    async getProfile(req, res) {
+    async getProfile(req, res, next) {
         try {
             const user = await UserService.findById(req.user.id);
             res.json(user);
@@ -19,7 +19,7 @@ class UserController {
         }
     }
 
-    async update(req, res) {
+    async update(req, res, next) {
         try {
             const user = await UserService.update(req.user.id, req.body);
             res.json(user);
@@ -28,7 +28,7 @@ class UserController {
         }
     }
 
-    async delete(req, res) {
+    async delete(req, res, next) {
         try {
             const idToDelete = req.params.id || req.user.id;
             const result = await UserService.delete(idToDelete);

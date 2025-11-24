@@ -1,7 +1,7 @@
 import EventService from '../services/EventService.js';
 
 class EventController {
-    async create(req, res) {
+    async create(req, res, next) {
         try {
             const event = await EventService.create(req.body, req.user.id);
             res.status(201).json(event);
@@ -10,7 +10,7 @@ class EventController {
         }
     }
 
-    async getAll(req, res) {
+    async getAll(req, res, next) {
         try {
             const events = await EventService.findAll();
             res.json(events);
@@ -19,7 +19,7 @@ class EventController {
         }
     }
 
-    async getById(req, res) {
+    async getById(req, res, next) {
         try {
             const event = await EventService.findById(req.params.id);
             res.json(event);
@@ -28,7 +28,7 @@ class EventController {
         }
     }
 
-    async update(req, res) {
+    async update(req, res, next) {
         try {
             const event = await EventService.update(req.params.id, req.body);
             res.json(event);
@@ -37,7 +37,7 @@ class EventController {
         }
     }
 
-    async delete(req, res) {
+    async delete(req, res, next) {
         try {
             const result = await EventService.delete(req.params.id);
             res.json(result);

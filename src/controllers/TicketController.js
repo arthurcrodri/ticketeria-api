@@ -1,7 +1,7 @@
 import TicketService from '../services/TicketService.js';
 
 class TicketController {
-    async purchase(req, res) {
+    async purchase(req, res, next) {
         try {
             const ticket = await TicketService.purchase(req.user.id, req.body.eventoId);
             res.status(201).json(ticket);
@@ -10,7 +10,7 @@ class TicketController {
         }
     }
 
-    async getMyTickets(req, res) {
+    async getMyTickets(req, res, next) {
         try {
             const tickets = await TicketService.findMyTickets(req.user.id);
             res.json(tickets);
@@ -19,7 +19,7 @@ class TicketController {
         }
     }
 
-    async cancel(req, res) {
+    async cancel(req, res, next) {
         try {
             const result = await TicketService.cancelTicket(
                 req.params.id,
