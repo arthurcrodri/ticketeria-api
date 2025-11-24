@@ -3,7 +3,8 @@ import EventDTO from '../dtos/EventDTO.js';
 
 class EventService {
     async create(eventData, userId) {
-        const dataWithOrganizer = { ...eventData, criadoPor: userId };
+        const preparedData = EventDTO.createInput(eventData);
+        const dataWithOrganizer = { ...preparedData, criadoPor: userId };
         const event = await EventRepository.create(dataWithOrganizer);
         return EventDTO.eventResponse(event);
     }
