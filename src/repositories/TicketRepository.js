@@ -16,6 +16,21 @@ class TicketRepository {
     async findByCode(codigo) {
         return await Ticket.findOne({ codigoReserva: codigo }).populate('usuario', 'nome email').populate('evento', 'titulo');
     }
+
+    async findById(id) {
+        return await Ticket.findById(id).populate('evento');
+    }
+
+    async updateStatus(id, status) {
+        return await Ticket.findByIdAndUpdate(id, { status }, { new: true });
+    }
+
+    async updateStatusByEventId(eventId, status) {
+        return await Ticket.updateMany(
+            { evento: eventId },
+            { status: status }
+        )
+    }
 }
 
 export default new TicketRepository();
