@@ -4,6 +4,11 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import connectDB from './config/database.js';
 
+import authRoutes from './routes/authRoutes.js';
+import userRoutes from './routes/userRoutes.js';
+import eventRoutes from './routes/eventRoutes.js';
+import ticketRoutes from './routes.ticketRoutes.js';
+
 // Configuração das variáveis de ambiente
 dotenv.config();
 
@@ -22,12 +27,17 @@ app.use(express.urlencoded({ extended: true }));
 // Configuração do PUG
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
-
 app.use(express.static(path.join(__dirname, '../public')));
 
-// Rota de teste
+// Definição de rotas da API
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/eventos', eventRoutes);
+app.use('/api/tickets', ticketRoutes);
+
+// Rota base
 app.get('/', (req, res) => {
-    res.send('API Ticketeria funcionando!');
+    res.send('API Ticketeria funcionando! Acesse /api/eventos apra ver a lista.');
 });
 
 const PORT = process.env.PORT || 3000;
