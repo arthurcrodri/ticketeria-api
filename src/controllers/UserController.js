@@ -6,7 +6,7 @@ class UserController {
             const users = await UserService.findAll();
             res.json(users);
         } catch (error) {
-            res.status(500).json({ erro: error.message });
+            next(error);
         }
     }
 
@@ -15,7 +15,7 @@ class UserController {
             const user = await UserService.findById(req.user.id);
             res.json(user);
         } catch (error) {
-            res.status(404).json({ erro: error.message });
+            next(error);
         }
     }
 
@@ -24,7 +24,7 @@ class UserController {
             const user = await UserService.update(req.user.id, req.body);
             res.json(user);
         } catch (error) {
-            res.status(400).json({ erro: error.message });
+            next(error);
         }
     }
 
@@ -34,7 +34,7 @@ class UserController {
             const result = await UserService.delete(idToDelete);
             res.json(result);
         } catch (error) {
-            res.status(400).json({ erro: error.message });
+            next(error);
         }
     }
 }

@@ -6,7 +6,7 @@ class TicketController {
             const ticket = await TicketService.purchase(req.user.id, req.body.eventoId);
             res.status(201).json(ticket);
         } catch (error) {
-            res.status(400).json({ erro: error.message });
+            next(error);
         }
     }
 
@@ -15,7 +15,7 @@ class TicketController {
             const tickets = await TicketService.findMyTickets(req.user.id);
             res.json(tickets);
         } catch (error) {
-            res.status(500).json({ erro: error.message });
+            next(error);
         }
     }
 
@@ -28,7 +28,7 @@ class TicketController {
             );
             res.json(result);
         } catch (error) {
-            res.status(400).json({ erro: error.message });
+            next(error);
         }
     }
 }
