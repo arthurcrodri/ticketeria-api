@@ -1,0 +1,13 @@
+//- src/views/layout.pug
+doctype html
+html(lang="pt-BR")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Ticketeria - Ingressos
+    //- Linkando o CSS público [cite: 317]
+    link(rel="stylesheet", href="/css/style.css")
+  body
+    .container
+      //- Placeholder onde as páginas filhas injetarão conteúdo [cite: 336]
+      block content

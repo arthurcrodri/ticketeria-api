@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import connectDB from './config/database.js';
+import ViewController from './controllers/ViewController.js'
 
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
@@ -38,9 +39,7 @@ app.use('/api/eventos', eventRoutes);
 app.use('/api/tickets', ticketRoutes);
 
 // Rota base
-app.get('/', (req, res) => {
-    res.send('API Ticketeria funcionando! Acesse /api/eventos apra ver a lista.');
-});
+app.get('/', ViewController.renderHome);
 
 // Rota 404
 app.use((req, res, next) => {

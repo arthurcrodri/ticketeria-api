@@ -1,0 +1,26 @@
+//- src/views/index.pug
+extends layout
+
+block content
+  h1 Próximos Eventos Disponíveis
+  
+  //- Condicional para verificar se existem eventos [cite: 344]
+  if eventos.length > 0
+    //- Laço de repetição para iterar sobre cada evento [cite: 345]
+    each evento in eventos
+      .card
+        h2= evento.titulo
+        p.info 📅 Data: #{new Date(evento.data).toLocaleDateString('pt-BR')}
+        p.info 📍 Local: #{evento.local}
+        p.info= evento.descricao
+        
+        //- Formatação de preço
+        div.price R$ #{evento.preco.toFixed(2)}
+        
+        //- Lógica visual de estoque
+        if evento.lugaresDisponiveis > 0
+          p.stock 🎟️ Restam #{evento.lugaresDisponiveis} ingressos
+        else
+          p.stock(style="color: gray") 🚫 Esgotado
+  else
+    p.empty Nenhum evento encontrado no momento.
