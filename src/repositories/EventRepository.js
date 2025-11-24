@@ -45,4 +45,4 @@ class EventRepository {
     }
 }
 
-exportt default new EventRepository();
+export default new EventRepository();

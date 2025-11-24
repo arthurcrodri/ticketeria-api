@@ -1,4 +1,4 @@
-import { param } from 'express-valdator';
+import { param } from 'express-validator';
 import mongoose from 'mongoose';
 
 export const idValidator = [

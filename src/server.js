@@ -7,7 +7,7 @@ import connectDB from './config/database.js';
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import eventRoutes from './routes/eventRoutes.js';
-import ticketRoutes from './routes.ticketRoutes.js';
+import ticketRoutes from './routes/ticketRoutes.js';
 
 import errorHandler from './middlewares/errorMiddleware.js'
 

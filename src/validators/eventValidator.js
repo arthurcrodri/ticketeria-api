@@ -2,7 +2,7 @@ import { body } from 'express-validator';
 
 export const eventValidator = [
     body('titulo')
-        .notEmpty().withMessage('O título é obrigatório)',
+        .notEmpty().withMessage('O título é obrigatório'),
 
     body('descricao')
         .notEmpty().withMessage('A descrição é obrigatória'),
@@ -24,5 +24,5 @@ export const eventValidator = [
         .isFloat({ min: 0 }).withMessage('O preço deve ser positivo ou zero'),
 
     body('capacidadeTotal')
-        .isInt({ min: 1 }).withMessage('A capacidade de ver pelo menos 1 pessoa')
+        .isInt({ min: 1 }).withMessage('A capacidade deve ser de pelo menos 1 pessoa')
 ];

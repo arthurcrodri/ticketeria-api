@@ -21,7 +21,7 @@ class EventService {
 
     async update(id, eventData) {
         const currentEvent = await EventRepository.findById(id);
-        if (!currentEvent) throw new Error('Evento não encontrado')l
+        if (!currentEvent) throw new Error('Evento não encontrado');
 
         if (eventData.capacidadeTotal !== undefined) {
             const ingressosVendidos = currentEvent.capacidadeTotal - currentEvent.ingressosDisponiveis;
