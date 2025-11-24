@@ -11,6 +11,23 @@ class ViewController {
             next(error);
         }
     }
+
+    renderLogin(req, res) {
+        res.render('login');
+    }
+
+    renderRegister(req, res) {
+        res.render('register');
+    }
+
+    async renderAdmin(req, res, next) {
+        try {
+            const eventos = await EventService.findAll();
+            res.render('admin', { eventos });
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 
 export default new ViewController();

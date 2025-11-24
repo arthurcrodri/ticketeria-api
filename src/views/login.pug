@@ -1,0 +1,51 @@
+extends layout
+
+block content
+  .form-container
+    h2 Entrar na Ticketeria
+    form#loginForm
+      .form-group
+        label(for="email") E-mail
+        input(type="email" id="email" name="email" required)
+      .form-group
+        label(for="senha") Senha
+        input(type="password" id="senha" name="senha" required)
+      
+      button.btn(type="submit") Entrar
+      p.error-msg#errorMsg Erro ao fazer login
+
+    p(style="text-align:center; margin-top:15px; font-size:0.9em;")
+      | Não tem conta? 
+      a(href="/cadastro") Cadastre-se
+
+  script.
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const senha = document.getElementById('senha').value;
+      const errorMsg = document.getElementById('errorMsg');
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, senha })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('role', data.user.role);
+          
+          if(data.user.role === 'admin') window.location.href = '/admin';
+          else window.location.href = '/';
+        } else {
+          errorMsg.textContent = data.erro || 'Dados inválidos';
+          errorMsg.style.display = 'block';
+        }
+      } catch (err) {
+        errorMsg.textContent = 'Erro de conexão';
+        errorMsg.style.display = 'block';
+      }
+    });

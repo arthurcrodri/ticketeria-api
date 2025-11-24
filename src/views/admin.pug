@@ -1,0 +1,82 @@
+extends layout
+
+block content
+  .admin-header
+    h1 Painel Administrativo
+    button.btn.btn-sm(onclick="document.getElementById('createForm').classList.toggle('hidden')") + Novo Evento
+
+  #createForm.form-container.hidden(style="margin-top:0; margin-bottom:20px; max-width: 600px;")
+    h3 Criar Novo Evento
+    form#newEventForm
+      .form-group
+        label Título
+        input(type="text" id="titulo" required)
+      .form-group
+        label Descrição
+        input(type="text" id="descricao" required)
+      .form-group
+        label Data (YYYY-MM-DD)
+        input(type="date" id="data" required)
+      .form-group
+        label Local
+        input(type="text" id="local" required)
+      .form-group
+        label Preço
+        input(type="number" id="preco" step="0.01" required)
+      .form-group
+        label Capacidade
+        input(type="number" id="capacidade" required)
+      button.btn(type="submit") Salvar Evento
+
+  h2 Gerenciar Eventos
+  if eventos.length > 0
+    each evento in eventos
+      .card(style="display:flex; justify-content:space-between; align-items:center;")
+        div
+          h3(style="margin:0; color:#333")= evento.titulo
+          p(style="margin:5px 0; color:#777") #{new Date(evento.data).toLocaleDateString('pt-BR')} - #{evento.local}
+          small 🎟️ Vendidos: #{evento.ingressosVendidos || 0} / #{evento.lugaresDisponiveis + (evento.ingressosVendidos || 0)}
+        div
+          button.btn.btn-danger.btn-sm(onclick=`deleteEvent('${evento.id}')`) Excluir
+  else
+    p Nenhum evento cadastrado.
+
+  script.
+    const token = localStorage.getItem('token');
+
+    if (!token || localStorage.getItem('role') !== 'admin') {
+      window.location.href = '/login';
+    }
+
+    document.getElementById('newEventForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const body = {
+        titulo: document.getElementById('titulo').value,
+        descricao: document.getElementById('descricao').value,
+        dataEvento: document.getElementById('data').value,
+        local: document.getElementById('local').value,
+        preco: parseFloat(document.getElementById('preco').value),
+        capacidadeTotal: parseInt(document.getElementById('capacidade').value)
+      };
+
+      const res = await fetch('/api/eventos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify(body)
+      });
+
+      if (res.ok) window.location.reload();
+      else alert('Erro ao criar evento');
+    });
+
+    async function deleteEvent(id) {
+      if(!confirm('Tem certeza que deseja excluir este evento?')) return;
+
+      const res = await fetch(`/api/eventos/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+
+      if (res.ok) window.location.reload();
+      else alert('Erro ao excluir');
+    }

@@ -38,8 +38,11 @@ app.use('/api/users', userRoutes);
 app.use('/api/eventos', eventRoutes);
 app.use('/api/tickets', ticketRoutes);
 
-// Rota base
+// Rotas do front
 app.get('/', ViewController.renderHome);
+app.get('/login', ViewController.renderLogin);
+app.get('/cadastro', ViewController.renderRegister);
+app.get('/admin', ViewController.renderAdmin);
 
 // Rota 404
 app.use((req, res, next) => {

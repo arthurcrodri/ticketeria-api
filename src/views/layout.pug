@@ -1,13 +1,41 @@
-//- src/views/layout.pug
 doctype html
 html(lang="pt-BR")
   head
     meta(charset="UTF-8")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    title Ticketeria - Ingressos
-    //- Linkando o CSS público [cite: 317]
+    title Ticketeria
     link(rel="stylesheet", href="/css/style.css")
   body
+    nav.navbar
+      .nav-container
+        a.brand(href="/") 🎟️ Ticketeria
+        .nav-links
+          a(href="/") Início
+          a#loginLink(href="/login") Login
+          a#registerLink(href="/cadastro") Criar Conta
+          a#adminLink.hidden(href="/admin") Painel Admin
+          a#logoutLink.hidden(href="#", onclick="logout()") Sair
+
     .container
-      //- Placeholder onde as páginas filhas injetarão conteúdo [cite: 336]
       block content
+
+    script.
+      
+      const token = localStorage.getItem('token');
+      const userRole = localStorage.getItem('role');
+
+      if (token) {
+        document.getElementById('loginLink').classList.add('hidden');
+        document.getElementById('registerLink').classList.add('hidden');
+        document.getElementById('logoutLink').classList.remove('hidden');
+        
+        if (userRole === 'admin') {
+          document.getElementById('adminLink').classList.remove('hidden');
+        }
+      }
+
+      function logout() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('role');
+        window.location.href = '/';
+      }
